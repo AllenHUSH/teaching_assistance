@@ -38,11 +38,11 @@ export default {
     content: String,
     bgcolor: {
       type: String,
-      default: "#f88"
+      default: "rgb(255, 134, 134)"
     },
     width: {
-      type: String,
-      default: "400px"
+      type: String
+      //   default: "400px"
     },
     height: {
       type: String,
@@ -65,7 +65,7 @@ export default {
         width: this.width,
         height: this.height,
         color: this.color
-      }
+      },
     };
   }
 };
