@@ -1,18 +1,23 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <van-row type="flex" justify="center">
+      <van-col span="6">
+        <HomeNav></HomeNav>
+      </van-col>
+      <van-col span="18">
+        <ShowCard title="New"></ShowCard>
+      </van-col>
+    </van-row>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import ShowCard from "@/components/ShowCard.vue";
+import HomeNav from "@/components/HomeNav.vue";
 
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
-}
+  name: "home",
+  components: { ShowCard, HomeNav }
+};
 </script>
