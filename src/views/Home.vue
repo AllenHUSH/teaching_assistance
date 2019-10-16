@@ -1,20 +1,27 @@
 <template>
+  <!-- ---------------------------------------------------------------------------主视图 -->
   <div class="home">
-    <van-row type="flex" justify="center">
-      <van-col span="6">
-        <HomeNav></HomeNav>
-      </van-col>
-      <van-col span="18">
-        <van-row type="flex" justify="space-around">
-          <van-col span="10">
-            <ShowCard title="Create" @click.native="showCreatCard=!showCreatCard"></ShowCard>
-          </van-col>
-          <van-col span="10">
-            <ShowCard title="Impromptu"></ShowCard>
-          </van-col>
-        </van-row>
-      </van-col>
-    </van-row>
+    <!-- -------------------------------------------------------------------左侧导航栏布局 -->
+    <div id="left">
+      <HomeNav></HomeNav>
+    </div>
+    <!-- -------------------------------------------------------------------右侧操作区布局 -->
+    <div id="right">
+      <div class="showBox">
+        <ShowCard title="Create" @click.native="showCreatCard=!showCreatCard"></ShowCard>
+      </div>
+      <!-- for循环自动生成 -->
+      <div class="showBox" v-for="(item, index) in courseList" :key="index">
+        <ShowCard
+          :title="item.name"
+          :content="item.description"
+          :bgcolor="item.bgcolor"
+          @click.native="toCourse(item)"
+        ></ShowCard>
+      </div>
+    </div>
+
+    <!-- ---------------------------------------------------------------------------新建课程卡片 -->
     <van-popup v-model="showCreatCard" round class="creatCard" position="right">
       <h1>添加</h1>
       <van-cell-group>
@@ -25,7 +32,7 @@
         </van-cell>
         <van-cell>
           <template>
-            <van-field v-model="newCourse.description" placeholder="简单描述" type="textarea" autosize/>
+            <van-field v-model="newCourse.description" placeholder="简单描述" type="textarea" autosize />
           </template>
         </van-cell>
         <van-cell>
@@ -70,29 +77,86 @@ export default {
       newCourse: {
         name: "",
         description: "",
-        class: ""
+        class: "",
+        bgcolor: ""
       },
-      courseList:{
-
-      }
+      courseList: [
+        {
+          name: "Impromptu",
+          description: "开始你的即兴演讲",
+          class: "",
+          bgcolor: "#4f4f4f"
+        },
+        {
+          name: "算法（一）",
+          description: "算法概论",
+          class: "计算机",
+          bgcolor: "#66ff00"
+        },
+        {
+          name: "人工智能（六）",
+          description: "机器学习和人工智能的关系",
+          class: "软件",
+          bgcolor: "#6600ff"
+        },
+        {
+          name: "人工智能（七）",
+          description: "三种机器学习方法",
+          class: "软件",
+          bgcolor: "#66aaff"
+        }
+      ]
     };
   },
   methods: {
+    toCourse(item) {
+      this.$router.push({
+        name: "Course",
+        params: {
+          name: item.name,
+          description: item.description,
+          class: item.class,
+          bgcolor: item.class
+        }
+      });
+    },
     //选择课程分类点击确定
     onConfirm(value) {
       this.newCourse.class = value;
       this.showPicker = false;
     },
     //提交确定
-    submitCreatCourse(){
+    submitCreatCourse() {
       console.log(this.newCourse);
     }
   }
 };
 </script>
 <style lang="less" scoped>
-.creatCard {
-  width: 40%;
-  height: 100vh;
+.home {
+  margin: 0;
+  padding: 0;
+  #left {
+    width: 30vw;
+    float: left;
+  }
+  #right {
+    width: 70vw;
+    float: left;
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap:wrap;
+    justify-content: space-around;
+    .showBox {
+      width: 45%;
+    }
+    .creatCard {
+      width: 40%;
+      height: 100vh;
+      .showBox {
+        width: 100px;
+      }
+    }
+  }
 }
 </style>
